@@ -23,11 +23,22 @@ export class TowerEventsController extends BaseController {
       next(error)
     }
   }
-  getAll(arg0, getAll) {
-    throw new Error("Method not implemented.");
+  async getAll(req, res, next) {
+    try {
+      req.query.creatorId = req.userInfo.id
+      const towerEvents = await towerEventsService.getAll(req.query)
+      return res.send(towerEvents)
+    } catch (error) {
+      next(error)
+    }
   }
-  getById(arg0, getById) {
-    throw new Error("Method not implemented.");
+  async getById(req, res, next) {
+    try {
+      const towerEvent = await towerEventsService.getById(req.params.id)
+      return res.send(towerEvent)
+    } catch (error) {
+      next(error)
+    }
   }
   edit(arg0, edit) {
     throw new Error("Method not implemented.");
