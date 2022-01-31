@@ -1,17 +1,17 @@
-
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
-export const AttendeeSchema = new Schema({
-  eventId: { type: ObjectId, required: true },
-  accountId: { type: ObjectId, ref: 'Profile', required: true }
 
+
+export const CommentSchema = new Schema({
+  eventId: { type: ObjectId, required: true },
+  creatorId: { type: ObjectId, required: true },
+  body: { type: String, required: true }
 },
   { timestamps: true, toJSON: { virtuals: true } }
-
 )
 
-AttendeeSchema.virtual('creator', {
+CommentSchema.virtual('creator', {
   localField: 'accountId',
   foreignField: '_id',
   justOne: true,

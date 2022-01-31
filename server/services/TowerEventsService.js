@@ -28,13 +28,16 @@ class TowerEventsService {
     if (original.creatorId.toString() !== edited.creatorId) {
       throw new BadRequest('Cant edit this Event')
     }
+    if (original.isCanceled == true) {
+      throw new BadRequest('can not edit this canceled event')
+    }
     original.name = edited.name || original.name
     original.description = edited.description || original.description
     original.coverImg = edited.coverImg || original.coverImg
     original.location = edited.location || original.location
     original.capacity = edited.capacity || original.capacity
     original.startDate = edited.startDate || original.startDate
-    original.isCancelled = edited.isCancelled || original.isCancelled
+    original.isCanceled = edited.isCanceled || original.isCanceled
     original.type = edited.type || original.type
 
     await original.save()
@@ -42,14 +45,15 @@ class TowerEventsService {
   }
 
   async remove(id, userId) {
-    const original = await this.getById(id)
+    const original = await dbContext.TowerEvents.findById(id)
     if (original.creatorId.toString() !== userId) {
       throw new BadRequest('could not remove event.')
     }
-    await original.remove()
+    original.isCanceled = true
+    await original.save()
     return original
   }
 
 }
 
-export const towerEventsService = new TowerEventsService
+export const towerEventsService = new TowerEventsService()

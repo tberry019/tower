@@ -1,4 +1,5 @@
 import { dbContext } from "../db/DbContext";
+import { BadRequest } from "@bcwdev/auth0provider/lib/Errors"
 
 
 class AttendeesService {
@@ -9,9 +10,30 @@ class AttendeesService {
     return attendee
   }
 
+  async getAll(query = {}) {
+    const attendance = await dbContext.Attendees.find(query).populate('creator', 'name description')
+    return attendance
+  }
+
+  async getByEventId(eventId) {
+    const attendees = await dbContext.Attendees.find({ eventId: eventId }).populate('creator')
+    if (!attendees) {
+      throw new BadRequest('Invalid Event Id')
+
+    }
+    return attendees
+
+  }
+
+  async remove(id, userId) {
+    const original = await dbContext.Attendees.findById(id)
+    if (original.accountId.toString() !== userId) {
+      throw new BadRequest('could not remove attendance')
+    }
+    await original.remove()
+    return original
+  }
+
 }
 
-
-
-
-export const attendeeService = new AttendeesService()
+export const attendeesService = new AttendeesService()
