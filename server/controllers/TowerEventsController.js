@@ -40,11 +40,23 @@ export class TowerEventsController extends BaseController {
       next(error)
     }
   }
-  edit(arg0, edit) {
-    throw new Error("Method not implemented.");
+  async edit(req, res, next) {
+    try {
+      req.body.creatorId = req.userInfo.id
+      req.body.eventId = req.params.eventId
+      const updated = await towerEventsService.edit(req.body, req.params.eventId)
+      return res.send(updated)
+    } catch (error) {
+      next(error)
+    }
   }
-  remove(arg0, remove) {
-    throw new Error("Method not implemented.");
+  async remove(req, res, next) {
+    try {
+      await towerEventsService.remove(req.params.id, req.userInfo.id)
+      return res.send('deleted')
+    } catch (error) {
+      next(error)
+    }
   }
 
 }
