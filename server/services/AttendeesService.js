@@ -6,10 +6,10 @@ import { BadRequest } from "@bcwdev/auth0provider/lib/Errors"
 class AttendeesService {
 
   async create(newAttendee) {
-    const foundEvent = await this.getByEventId(newAttendee.eventId)
+    const foundEvent = await dbContext.TowerEvents.findById(newAttendee.eventId)
 
 
-    // @ts-ignore
+
     if (foundEvent.capacity <= 0) {
 
       throw new BadRequest('event is full')
@@ -17,14 +17,14 @@ class AttendeesService {
 
     const attendee = await dbContext.Attendees.create(newAttendee)
 
-    // @ts-ignore
+
     foundEvent.capacity -= 1
 
 
 
 
 
-    // @ts-ignore
+
     await foundEvent.save()
     await attendee.populate('account', 'name description')
     return attendee

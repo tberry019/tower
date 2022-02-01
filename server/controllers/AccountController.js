@@ -23,7 +23,7 @@ export class AccountController extends BaseController {
 
   async getAll(req, res, next) {
     try {
-      const attendee = await attendeesService.getAll()
+      const attendee = await attendeesService.getAll({ accountId: req.userInfo.id })
       res.send(attendee)
     } catch (error) {
       next(error)
