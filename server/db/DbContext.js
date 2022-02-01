@@ -16,6 +16,7 @@ class DbContext {
   Attendees = mongoose.model('Attendee', AttendeeSchema);
 
   Comments = mongoose.model('Comment', CommentSchema)
+
 }
 
 export const dbContext = new DbContext()

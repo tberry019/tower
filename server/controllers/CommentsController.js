@@ -6,12 +6,12 @@ import BaseController from "../utils/BaseController";
 
 export class CommentsController extends BaseController {
   constructor() {
-    super('')
+    super('api/comments')
     this.router
+      //TODO move the below route into the events controller, and call the comments service 
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .post('/api/comments', this.create)
-      .get('/api/events/:eventId/comments', this.getByEventId)
-      .delete('/api/comments/:commentId', this.remove)
+      .post('', this.create)
+      .delete('/:commentId', this.remove)
 
 
   }

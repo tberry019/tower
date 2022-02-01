@@ -12,7 +12,7 @@ export const CommentSchema = new Schema({
 )
 
 CommentSchema.virtual('creator', {
-  localField: 'accountId',
+  localField: 'creatorId',
   foreignField: '_id',
   justOne: true,
   ref: 'Profile'

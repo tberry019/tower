@@ -8,11 +8,9 @@ class TowerEventsService {
     return towerEvent
   }
 
-  async getAll(query = {}) {
-    const TowerEvents = await dbContext.TowerEvents.find(query).populate
-      ('creator', 'name description')
-
-    return TowerEvents
+  async getAll() {
+    const towerEvents = await dbContext.TowerEvents.find().populate('creator', 'name description')
+    return towerEvents
   }
 
   async getById(towerEventId) {
@@ -37,7 +35,6 @@ class TowerEventsService {
     original.location = edited.location || original.location
     original.capacity = edited.capacity || original.capacity
     original.startDate = edited.startDate || original.startDate
-    original.isCanceled = edited.isCanceled || original.isCanceled
     original.type = edited.type || original.type
 
     await original.save()
