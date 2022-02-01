@@ -1,4 +1,5 @@
 import { dbContext } from "../db/DbContext";
+// @ts-ignore
 import { BadRequest } from "@bcwdev/auth0provider/lib/Errors"
 
 
@@ -7,6 +8,7 @@ class AttendeesService {
   async create(newAttendee) {
     const foundEvent = await this.getByEventId(newAttendee.eventId)
 
+
     // @ts-ignore
     if (foundEvent.capacity <= 0) {
 
@@ -14,8 +16,10 @@ class AttendeesService {
     }
 
     const attendee = await dbContext.Attendees.create(newAttendee)
+
     // @ts-ignore
     foundEvent.capacity -= 1
+
 
 
 

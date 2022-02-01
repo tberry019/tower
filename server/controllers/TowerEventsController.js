@@ -3,6 +3,7 @@ import { attendeesService } from "../services/AttendeesService";
 import { commentsService } from "../services/CommentsService";
 import { towerEventsService } from "../services/TowerEventsService";
 import BaseController from "../utils/BaseController";
+import { logger } from "../utils/Logger";
 
 
 export class TowerEventsController extends BaseController {

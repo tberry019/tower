@@ -1,5 +1,6 @@
 import { dbContext } from "../db/DbContext";
 import { BadRequest } from "@bcwdev/auth0provider/lib/Errors"
+import { logger } from "../utils/Logger";
 
 class TowerEventsService {
   async create(newTowerEvent) {
@@ -11,6 +12,8 @@ class TowerEventsService {
   async getAll() {
     const towerEvents = await dbContext.TowerEvents.find().populate('creator', 'name description')
     return towerEvents
+
+
   }
 
   async getById(towerEventId) {
