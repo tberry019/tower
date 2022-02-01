@@ -4,18 +4,21 @@ import { attendeesService } from "../services/AttendeesService";
 
 export class AttendeesController extends BaseController {
   constructor() {
-    super('')
+    super('api/attendees')
     this.router
-      .use(Auth0Provider.getAuthorizedUserInfo)
-      .post('/api/attendees', this.create)
-      .get('/account/attendees', this.getAll)
+      // TODO move below route into the events controller, and call the attendees service
       .get('/api/events/:eventId/attendees', this.getByEventId)
-      .delete('/api/attendees/:id', this.remove)
+      .use(Auth0Provider.getAuthorizedUserInfo)
+      // TODO move the below route to the accounts controller, and call to the attendees service
+      .get('/account/attendees', this.getAll)
+      .post('', this.create)
+      .delete('/:id', this.remove)
 
 
   }
   async create(req, res, next) {
     try {
+
       req.body.accountId = req.userInfo.id
       const attendee = await attendeesService.create(req.body)
       return res.send(attendee)
