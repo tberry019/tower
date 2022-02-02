@@ -5,7 +5,7 @@ import { dbContext } from "../db/DbContext"
 class CommentsService {
   async create(newComment) {
     const comment = await dbContext.Comments.create(newComment)
-    await comment.populate('creator', 'name description')
+    await comment.populate('creator', 'name description picture')
     return comment
   }
   async getByEventId(eventId) {
